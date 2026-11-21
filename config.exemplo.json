@@ -1,0 +1,94 @@
+{
+ "clip_antes_s": 35,
+ "clip_depois_s": 8,
+ "cooldown_s": 75,
+ "limiar_chat_z": 3.0,
+ "limiar_audio_z": 4.5,
+ "aquecimento_s": 150,
+ "janela_s": 10,
+ "manter_segmentos_min": 20,
+ "whisper_modelo": "large-v3-turbo",
+ "separar_voz": true,
+ "whisper_prompt": "Live de GTA 6 em português do Brasil. Streamer conversando com o chat. GTA VI, Lucia, Jason, Vice City, Leonida, Rockstar, polícia, carro, moto, assalto, missão, mano, véi, caralho, porra, kkkk.",
+ "idioma": "pt",
+ "encoder": "h264_amf",
+ "ollama_modelo": null,
+ "modelo_metadados": "haiku",
+ "hashtags": "#gta6 #gtavi #gta #shorts",
+ "palavras_hype": [
+  "kkk",
+  "kkkk",
+  "mds",
+  "caralho",
+  "krl",
+  "clipa",
+  "clip",
+  "rachei",
+  "morri",
+  "lol",
+  "kkkkk",
+  "😂",
+  "🤣",
+  "💀",
+  "lmao",
+  "kakak",
+  "slk",
+  "oloco",
+  "nossa",
+  "pqp"
+ ],
+ "streamers": {
+  "loud": {
+   "nome": "LOUD Coringa",
+   "handle": "@LOUDCoringa",
+   "youtube": "https://www.youtube.com/@LOUDCoringa",
+   "facecam": {
+    "x": 0.0,
+    "y": 0.113,
+    "w": 0.241,
+    "h": 0.28
+   },
+   "ativo": true
+  },
+  "bistecone": {
+   "nome": "Bistecone",
+   "handle": "@Bistecone",
+   "youtube": "https://www.youtube.com/channel/UC7c0msgggkLeIW6lwJAy-Ow",
+   "facecam": {
+    "x": 0.757,
+    "y": 0.172,
+    "w": 0.204,
+    "h": 0.282
+   },
+   "ativo": true
+  },
+  "davy": {
+   "nome": "Davy Jones",
+   "handle": "@Gameplayrj",
+   "youtube": "https://www.youtube.com/channel/UCJAbkIY17zAmCTNQHH0bQoQ",
+   "facecam": {
+    "x": 0.783,
+    "y": 0.096,
+    "w": 0.211,
+    "h": 0.215
+   },
+   "ativo": true
+  },
+  "alanzoka": {
+   "nome": "alanzoka",
+   "handle": "@alanzoka",
+   "twitch": "alanzoka",
+   "facecam": {
+    "x": 0.773,
+    "y": 0.448,
+    "w": 0.206,
+    "h": 0.246
+   },
+   "ativo": true
+  }
+ },
+ "_streamers_obs": "facecam null = video inteiro centralizado c/ fundo desfocado. Para layout facecam+jogo, informe o retangulo da cam (fracao 0-1) igual ao do loud. ativo=false desliga o streamer.",
+ "checar_live_min": 10,
+ "vod_max_cortes": 15,
+ "_obs": "Edite 'streamers' com os canais que quer cortar. youtube = link do canal | twitch = login do canal. facecam = retangulo da webcam (fracoes 0-1) ou null."
+}

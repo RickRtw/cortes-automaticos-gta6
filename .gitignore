@@ -1,0 +1,37 @@
+# --- SEGREDOS / SESSOES (nunca versionar) ---
+credenciais/
+navegador_*/
+tiktok.json
+*.token.json
+.env
+
+# --- configuracao local (o repo traz os *.exemplo.json) ---
+config.json
+publicacao.json
+
+# --- dados gerados pelo sistema ---
+cortes/
+salvos/
+work/
+test/
+fila.json
+fila.json.tmp
+metricas.json
+aprendizado.json
+APRENDIZADO.md
+estado_post.json
+vods_feitos.json
+tiktok_legendas.txt
+momentos_*.jsonl
+*.log
+app_icon_tiktok.png
+
+# --- python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- configs locais de agentes (so a skill vai pro repo) ---
+.claude/*
+!.claude/skills/

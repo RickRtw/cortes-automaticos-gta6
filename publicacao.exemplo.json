@@ -1,0 +1,32 @@
+{
+ "modo": "auto",
+ "_modo_obs": "auto = posta sozinho cortes com score >= score_minimo | aprovar = espera 'python publicador.py aprovar <nome>'",
+ "score_minimo": 4.0,
+ "validade_horas": 72,
+ "_validade_obs": "corte mais velho que isso nao e mais postado (hype passa rapido)",
+ "plataformas": {
+  "youtube": {
+   "ativo": false,
+   "max_por_dia": null,
+   "privacidade": "public",
+   "modo": "navegador"
+  },
+  "instagram": {
+   "ativo": false,
+   "max_por_dia": null,
+   "modo": "navegador"
+  },
+  "tiktok": {
+   "ativo": false,
+   "max_por_dia": null,
+   "privacidade": "PUBLIC_TO_EVERYONE",
+   "modo": "navegador"
+  }
+ },
+ "_obs": "Para cada plataforma: faca o login (python <plataforma>_web.py login) ou configure a API (README), rode 'python publicador.py checar' e mude ativo para true. modo: navegador | api (youtube/instagram) | direto/rascunho (tiktok API).",
+ "intervalo_min": 10,
+ "variacao_pct": 30,
+ "pausa_bloqueio_horas": 1,
+ "navegador_visivel": true,
+ "_intervalo_obs": "intervalo_min = minutos entre posts EM CADA plataforma (variacao_pct sorteia +-%% p/ parecer humano). Cada plataforma pode ter o seu intervalo_min."
+}

@@ -35,6 +35,24 @@ def checar():
     return nv.sessao(P, "https://studio.youtube.com", _bloqueio)
 
 
+# Detecta a janela "Video publicado" percorrendo o DOM inteiro, incluindo shadow roots.
+_JS_PUBLICADO = r"""() => {
+  const out = {ok: false, link: null};
+  const re = /(v[íi]deo publicado|video published|ainda processando|still processing)/i;
+  const walk = (root) => {
+    const els = root.querySelectorAll('*');
+    for (const el of els) {
+      if (el.tagName === 'A' && /youtube\.com\/shorts\/[\w-]{11}|youtu\.be\/[\w-]{11}/.test(el.href || '')) out.link = el.href;
+      if (/^(YTCP-VIDEO-SHARE-DIALOG|YTCP-UPLOADS-STILL-PROCESSING-DIALOG)$/.test(el.tagName) && el.offsetParent !== null) out.ok = true;
+      if (!out.ok && el.childElementCount === 0 && re.test(el.textContent || '') && el.offsetParent !== null) out.ok = true;
+      if (el.shadowRoot) walk(el.shadowRoot);
+    }
+  };
+  walk(document);
+  return out;
+}"""
+
+
 def _caixa(page, seletor, texto):
     box = page.locator(seletor).first
     box.wait_for(state="visible", timeout=60000)
@@ -96,13 +114,9 @@ def postar(mp4, titulo, descricao="", timeout_upload=1200):
             t0 = time.time()
             while time.time() - t0 < 90:
                 try:
-                    pub = page.get_by_text(re.compile(r"^(Vídeo publicado|Video published|Ainda processando|Still processing)", re.I)).first
-                    if pub.is_visible(timeout=1000) or \
-                            page.locator("ytcp-video-share-dialog, ytcp-uploads-still-processing-dialog").first.is_visible(timeout=500):
-                        try:  # link exibido na janela "Video publicado"
-                            link = page.locator("a[href*='youtube.com/shorts/'], a[href*='youtu.be/']").last.get_attribute("href", timeout=3000) or link
-                        except Exception:
-                            pass
+                    st = page.evaluate(_JS_PUBLICADO)  # varre tambem shadow DOM dos componentes do Studio
+                    if st.get("ok"):
+                        link = st.get("link") or link
                         vid = re.search(r"(?:shorts/|youtu\.be/|v=)([\w-]{11})", link or "")
                         return f"https://youtube.com/shorts/{vid.group(1)}" if vid else "youtube (navegador): publicado"
                 except Exception:

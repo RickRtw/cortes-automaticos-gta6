@@ -3,6 +3,7 @@ Postagem no YouTube pelo NAVEGADOR (YouTube Studio), usando a sua conta logada.
 Fica fora da cota da YouTube Data API (que so permite ~6 uploads/dia).
 
   python youtube_web.py login
+  python youtube_web.py importar [Perfil]   # usa o perfil do SEU Chrome ja logado (feche o Chrome antes)
   python youtube_web.py checar
   python youtube_web.py postar <video.mp4> "<titulo>" "<descricao>"
 """
@@ -95,7 +96,13 @@ def postar(mp4, titulo, descricao="", timeout_upload=1200):
             t0 = time.time()
             while time.time() - t0 < 90:
                 try:
-                    if page.locator("ytcp-video-share-dialog, ytcp-uploads-still-processing-dialog").first.is_visible(timeout=1000):
+                    pub = page.get_by_text(re.compile(r"^(Vídeo publicado|Video published|Ainda processando|Still processing)", re.I)).first
+                    if pub.is_visible(timeout=1000) or \
+                            page.locator("ytcp-video-share-dialog, ytcp-uploads-still-processing-dialog").first.is_visible(timeout=500):
+                        try:  # link exibido na janela "Video publicado"
+                            link = page.locator("a[href*='youtube.com/shorts/'], a[href*='youtu.be/']").last.get_attribute("href", timeout=3000) or link
+                        except Exception:
+                            pass
                         vid = re.search(r"(?:shorts/|youtu\.be/|v=)([\w-]{11})", link or "")
                         return f"https://youtube.com/shorts/{vid.group(1)}" if vid else "youtube (navegador): publicado"
                 except Exception:
@@ -118,6 +125,9 @@ if __name__ == "__main__":
     a = sys.argv[1:] or ["checar"]
     if a[0] == "login":
         login()
+    elif a[0] == "importar":  # usa o perfil do seu Chrome ja logado (Chrome fechado)
+        nv.importar_perfil(P, a[1] if len(a) > 1 else "Default")
+        checar()
     elif a[0] == "checar":
         checar()
     elif a[0] == "postar" and len(a) >= 3:

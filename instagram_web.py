@@ -40,7 +40,7 @@ def _botao(page, *nomes, timeout=15000):
     loc = page.get_by_role("button", name=R(*nomes)).or_(page.locator("div[role='button']", has_text=R(*nomes)))
     loc.first.wait_for(state="visible", timeout=timeout)
     nv.pausa(0.6, 1.4)
-    loc.first.click()
+    loc.first.click(timeout=timeout)
 
 
 def postar(mp4, legenda, timeout_upload=600):
@@ -59,9 +59,9 @@ def postar(mp4, legenda, timeout_upload=600):
                 except Exception:
                     pass
             # menu lateral "Criar" -> "Publicacao"
-            page.locator("svg[aria-label='Nova publicação'], svg[aria-label='New post']").first.click()
+            page.locator("svg[aria-label='Novo post'], svg[aria-label='Nova publicação'], svg[aria-label='New post']").first.click()
             nv.pausa(1, 2)
-            for txt in ("Publicação", "Post"):
+            for txt in ("Postar", "Publicação", "Post"):
                 try:
                     page.locator("a, div[role='link'], div[role='button'], span", has_text=R(txt)).first.click(timeout=3000)
                     break
@@ -88,9 +88,21 @@ def postar(mp4, legenda, timeout_upload=600):
                                "div[role='textbox'][contenteditable='true']").first
             cap.wait_for(state="visible", timeout=30000)
             cap.click(); nv.pausa(0.4, 0.8)
-            nv.digitar(page, legenda[:2200], hashtag_popup=True)
+            nv.digitar(page, legenda[:2200])  # sem Escape: no Instagram o Esc abre "Descartar post?"
             nv.pausa(1, 2)
-            _botao(page, "Compartilhar", "Share")
+            try:  # defesa: se o aviso de descarte abrir, cancela
+                page.get_by_role("button", name=R("Cancelar", "Cancel")).click(timeout=1500)
+            except Exception:
+                pass
+            try:  # fecha a lista de sugestao de hashtag clicando no titulo do dialogo
+                page.get_by_text(R("Novo reel", "New reel", "Criar novo post", "Create new post")).first.click(timeout=3000)
+            except Exception:
+                pass
+            nv.pausa(0.8, 1.5)
+            try:
+                _botao(page, "Compartilhar", "Share", timeout=8000)
+            except Exception:
+                page.locator("div[role='dialog'] div[role='button']", has_text=R("Compartilhar", "Share")).first.click(force=True)
             nv.log(P, "cliquei em Compartilhar, aguardando o envio...")
             t0 = time.time()
             while time.time() - t0 < timeout_upload:

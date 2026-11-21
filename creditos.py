@@ -7,12 +7,12 @@ EMPRESA = {
     "cnpj": "70.163.846/0001-28",
     "site": "https://coreenterprise.com.br",
     "email": "comercial@coreenterprise.com.br",
-    "repo": "https://github.com/RickRtw/cortes-automaticos",
+    "repo": "https://github.com/RickRtw/cortes-automaticos-gta6",
 }
 
 BANNER = f"""
  ============================================================================
-   CORTES AUTOMATICOS  -  live -> Shorts / Reels / TikTok, no piloto automatico
+   CORTES AUTOMATICOS GTA 6  -  live -> Shorts / Reels / TikTok no automatico
    Desenvolvido por {EMPRESA['nome']}  ({EMPRESA['site']})
  ----------------------------------------------------------------------------
    A C.O.R.E cria sites premium, sistemas internos e automacoes que tiram

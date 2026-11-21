@@ -1,4 +1,4 @@
-# Cortes Automáticos — live → Shorts / Reels / TikTok no piloto automático
+# Cortes Automáticos GTA 6 — lives viram Shorts, Reels e TikToks sozinhas
 
 > Desenvolvido por **[C.O.R.E Enterprise](https://coreenterprise.com.br)** · sistemas internos, automações e sites premium que tiram trabalho manual da sua operação.
 > Quer uma automação sob medida para o seu negócio? **comercial@coreenterprise.com.br**
@@ -12,7 +12,7 @@ Acompanha lives (YouTube e Twitch), detecta os momentos de hype pelo **chat + á
 - **Anti-ban:** intervalo configurável entre posts com variação aleatória, ritmo humano de digitação, e pausa automática quando aparece login, CAPTCHA ou limite. **O sistema nunca contorna CAPTCHA e nunca digita senha.**
 - **Aprendizado:** coleta views/likes (e retenção, se habilitada), compara os vídeos que deram certo com os que não deram e ajusta a ordem da fila e o estilo dos títulos.
 
-> **Usando uma IA para instalar?** Peça: *"clone https://github.com/RickRtw/cortes-automaticos e configure pra mim"*. A IA segue o guia em [`.claude/skills/cortes-automaticos/SKILL.md`](.claude/skills/cortes-automaticos/SKILL.md) (também referenciado em [`AGENTS.md`](AGENTS.md)).
+> **Usando uma IA para instalar?** Peça: *"clone https://github.com/RickRtw/cortes-automaticos-gta6 e configure pra mim"*. A IA segue o guia em [`.claude/skills/cortes-automaticos/SKILL.md`](.claude/skills/cortes-automaticos/SKILL.md) (também referenciado em [`AGENTS.md`](AGENTS.md)).
 
 ---
 
@@ -40,8 +40,8 @@ Acompanha lives (YouTube e Twitch), detecta os momentos de hype pelo **chat + á
 
 ## 2. Instalação
 ```bash
-git clone https://github.com/RickRtw/cortes-automaticos
-cd cortes-automaticos
+git clone https://github.com/RickRtw/cortes-automaticos-gta6
+cd cortes-automaticos-gta6
 python -m pip install -r requirements.txt
 python -m playwright install chromium
 ```

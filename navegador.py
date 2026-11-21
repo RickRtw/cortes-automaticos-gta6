@@ -111,6 +111,30 @@ def login(plat, url, logado, avisar=""):
         return ok
 
 
+def importar_perfil(plat, perfil="Default"):
+    """Copia um perfil do SEU Chrome (ja logado) para o navegador do robo desta plataforma.
+    Util quando o login direto nao da (ex.: conta so com chave de acesso/passkey).
+    O Chrome precisa estar FECHADO durante a copia (ele trava os arquivos de sessao)."""
+    import shutil, subprocess
+    origem = os.path.join(os.environ.get("LOCALAPPDATA", ""), "Google", "Chrome", "User Data")
+    if not os.path.isdir(os.path.join(origem, perfil)):
+        raise SystemExit(f"perfil '{perfil}' nao encontrado em {origem}")
+    if os.name == "nt":
+        r = subprocess.run(["tasklist", "/FI", "IMAGENAME eq chrome.exe", "/NH"], capture_output=True, text=True)
+        if "chrome.exe" in r.stdout:
+            raise SystemExit("Feche TODAS as janelas do Google Chrome e rode de novo (a copia leva poucos segundos).")
+    destino = os.path.join(BASE, f"navegador_{plat}")
+    pesado = shutil.ignore_patterns("Cache", "Code Cache", "GPUCache", "DawnCache", "GrShaderCache", "ShaderCache",
+                                    "CacheStorage", "ScriptCache", "blob_storage", "*.log", "LOCK", "Crashpad",
+                                    "optimization_guide*", "OnDeviceHeadSuggestModel", "Safe Browsing*")
+    if os.path.exists(destino):
+        shutil.rmtree(destino)
+    os.makedirs(destino)
+    shutil.copy2(os.path.join(origem, "Local State"), os.path.join(destino, "Local State"))
+    shutil.copytree(os.path.join(origem, perfil), os.path.join(destino, "Default"), ignore=pesado, dirs_exist_ok=True)
+    print(f"{plat}: perfil '{perfil}' do seu Chrome copiado para {destino}. Pode reabrir o Chrome.")
+
+
 def sessao(plat, url, bloqueio):
     """Abre a plataforma e confere se a sessao continua valida."""
     from playwright.sync_api import sync_playwright
